@@ -1,0 +1,110 @@
+x-devices-common: &devices-common
+  depends_on:
+    server:
+      condition: service_healthy
+  pull_policy: daily
+
+x-devices-common-environment: &devices-common-environment
+  SERVER_DISCOVERY_PORT: 30000 # Port on which the device will announce in broadcast
+  # Broadcast address to which the device will announce itself. (May need to be changed due to some firewall configurations)
+  DISCOVERY_BROADCAST_ADDR: &discovery-broadcast-address 255.255.255.255
+  # Some device containers use this var name but the meaning is the same as DISCOVERY_BROADCAST_ADDR
+  SERVER_DISCOVERY_ADDR: *discovery-broadcast-address
+
+name: "domoticasw-demo"
+
+volumes:
+  mongo-data:
+
+services:
+  server:
+    image: ventus218/domoticasw-server
+    pull_policy: daily
+    depends_on:
+      mongo:
+        condition: service_healthy
+    healthcheck:
+      test: wget --quiet --spider http://localhost:3000 || exit 1
+      interval: 3s
+      timeout: 10s
+      retries: 5 
+    ports:
+      - 80:3000
+    environment:
+      SERVER_PORT: 3000
+      DISCOVERY_PORT: 30000
+      JWT_SECRET: secret
+
+  mongo:
+    image: mongo
+    volumes:
+      - mongo-data:/data/db
+    healthcheck:
+      test: mongosh --quiet --eval "db.runCommand('ping').ok" || exit 1
+      interval: 3s
+      timeout: 10s
+      retries: 5
+
+  # Simulated devices
+  roomba:
+    image: ventus218/domoticasw-roomba
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+
+  music-player:
+    image: corradostortini2/domoticasw-music-player
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+      MUSICS: "Back in Black-255,Must Have Been the Wind-243,Eye of the Tiger-246,Don't Stop Me Now-209,INVISIBLE-191"
+
+  light-sensor:
+    image: corradostortini2/domoticasw-light-sensor
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+
+  presence-sensor:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+      ID: presence-sensor
+      TARGET_CONDITION: Presence
+      CONDITION_PROBABILITY: 33
+      CONDITION_TEST_PERIOD_MS: 5000
+
+  rain-sensor:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+      ID: rain-sensor
+      TARGET_CONDITION: Rain
+      CONDITION_PROBABILITY: 25
+      CONDITION_TEST_PERIOD_MS: 5000
+
+  washing-machine:
+    image: marcoraggio/domoticasw-washing-machine:latest
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+
+  smart-window:
+    image: marcoraggio/domoticasw-window:latest
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+
+  lamp:
+    image: fracarluccii/domoticasw-lamp:latest
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
+
+  thermometer:
+    image: fracarluccii/domoticasw-thermometer:latest
+    <<: *devices-common
+    environment:
+      <<: *devices-common-environment
