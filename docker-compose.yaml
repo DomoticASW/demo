@@ -11,8 +11,11 @@ x-devices-common-environment: &devices-common-environment
   # Some device containers use this var name but the meaning is the same as DISCOVERY_BROADCAST_ADDR
   SERVER_DISCOVERY_ADDR: *discovery-broadcast-address
 
-name: "domoticasw-demo"
+# This is a reusable piece of code that marks devices that are already registered to the server
+x-device-already-registered-env: &device-already-registered-env
+  SERVER_ADDRESS: server:3000
 
+name: "domoticasw-demo"
 
 services:
   server:
@@ -50,7 +53,7 @@ services:
     image: ventus218/domoticasw-roomba
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.1
@@ -59,7 +62,7 @@ services:
     image: corradostortini2/domoticasw-music-player
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
       MUSICS: "Back in Black-255,Must Have Been the Wind-243,Eye of the Tiger-246,Don't Stop Me Now-209,INVISIBLE-191"
     networks:
       default:
@@ -69,7 +72,7 @@ services:
     image: corradostortini2/domoticasw-light-sensor
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.3
@@ -78,7 +81,7 @@ services:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
       ID: presence-sensor
       TARGET_CONDITION: Presence
       CONDITION_PROBABILITY: 33
@@ -91,7 +94,7 @@ services:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
       ID: rain-sensor
       TARGET_CONDITION: Rain
       CONDITION_PROBABILITY: 25
@@ -104,7 +107,7 @@ services:
     image: marcoraggio/domoticasw-washing-machine:latest
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.6
@@ -113,7 +116,7 @@ services:
     image: marcoraggio/domoticasw-window:latest
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.7
@@ -122,7 +125,7 @@ services:
     image: fracarluccii/domoticasw-lamp:latest
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.8
@@ -131,7 +134,7 @@ services:
     image: fracarluccii/domoticasw-thermometer:latest
     <<: *devices-common
     environment:
-      <<: *devices-common-environment
+      <<: [*devices-common-environment]
     networks:
       default:
         ipv4_address: 172.28.5.9
