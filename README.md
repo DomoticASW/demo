@@ -25,7 +25,19 @@ The app will now be available at [localhost](http://localhost)
 ## How to stop it
 
 ```sh
+# Will stop the containers without deleting anonymous volumes keeping your modifications
+docker compose stop
+# If you want to restart the system
+docker compose up
+```
+
+## How to start back from sample data
+
+```sh
+# Will stop and remove containers and anonymous volumes
 docker compose down
+# If you want to restart the system
+docker compose up
 ```
 
 ## Sample data explained
@@ -47,3 +59,41 @@ docker compose down
 | User         | Email                  | Password |
 | ------------ | ---------------------- | -------- |
 | Evelyn Moore | evelyn.moore@email.com | password |
+
+## How to modify and persist sample data
+
+You should run:
+
+```sh
+# UNIX shells
+DUMP_DB=true docker compose up -d
+```
+
+```powershell
+# Powershell
+$env:DUMP_DB="true"; docker compose up -d
+```
+
+```cmd
+REM Command Prompt
+set "DUMP_DB=true" && docker compose up -d
+```
+
+Once you have modified the sample data just stop the containers:
+
+```sh
+docker compose down
+```
+
+Once MongoDB container has stopped you can check that the [dump](./dump) folder has changed:
+
+```sh
+git status
+```
+
+You can then commit those changes:
+
+```sh
+git add ./dump
+git commit -m "modified sample data"
+```

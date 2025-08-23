@@ -42,12 +42,15 @@ services:
     image: mongo
     volumes:
       - ./dump:/data/dump
+      - ./dump:/dump
       - ./mongo-init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: mongosh --quiet --eval "db.runCommand('ping').ok" || exit 1
       interval: 3s
       timeout: 10s
       retries: 5
+    pre_stop:
+      - command: sh -c "if [ "${DUMP_DB}" = "true" ]; then mongodump --out /dump; fi"
 
   # Simulated devices
   roomba:
