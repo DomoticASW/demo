@@ -1,0 +1,1 @@
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"d9f3e6db871a42d28611c86a08ffdf4e","collectionName":"editlists","type":"collection"}

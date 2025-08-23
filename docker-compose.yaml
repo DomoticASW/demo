@@ -41,7 +41,8 @@ services:
   mongo:
     image: mongo
     volumes:
-      - ./mongo-data:/data/db
+      - ./dump:/data/dump
+      - ./mongo-init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: mongosh --quiet --eval "db.runCommand('ping').ok" || exit 1
       interval: 3s
