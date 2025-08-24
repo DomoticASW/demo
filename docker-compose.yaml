@@ -58,96 +58,69 @@ services:
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.1
+      LAN_HOSTNAME: roomba
 
   music-player:
     image: corradostortini2/domoticasw-music-player
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
+      LAN_HOSTNAME: music-player
       MUSICS: "Back in Black-255,Must Have Been the Wind-243,Eye of the Tiger-246,Don't Stop Me Now-209,INVISIBLE-191"
-    networks:
-      default:
-        ipv4_address: 172.28.5.2
 
   light-sensor:
     image: corradostortini2/domoticasw-light-sensor
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.3
+      LAN_HOSTNAME: light-sensor
 
   presence-sensor:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
+      LAN_HOSTNAME: presence-sensor
       ID: presence-sensor
       TARGET_CONDITION: Presence
       CONDITION_PROBABILITY: 33
       CONDITION_TEST_PERIOD_MS: 5000
-    networks:
-      default:
-        ipv4_address: 172.28.5.4
 
   rain-sensor:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
+      LAN_HOSTNAME: rain-sensor
       ID: rain-sensor
       TARGET_CONDITION: Rain
       CONDITION_PROBABILITY: 25
       CONDITION_TEST_PERIOD_MS: 5000
-    networks:
-      default:
-        ipv4_address: 172.28.5.5
 
   washing-machine:
     image: marcoraggio/domoticasw-washing-machine:latest
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.6
+      LAN_HOSTNAME: washing-machine
 
   smart-window:
     image: marcoraggio/domoticasw-window:latest
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.7
+      LAN_HOSTNAME: smart-window
 
   lamp:
     image: fracarluccii/domoticasw-lamp:latest
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.8
+      LAN_HOSTNAME: lamp
 
   thermometer:
     image: fracarluccii/domoticasw-thermometer:latest
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
-    networks:
-      default:
-        ipv4_address: 172.28.5.9
-
-# According to the doc we need to set a subnet in order to assign static ip addresses to containers
-networks:
-  default:
-    ipam:
-      config:
-        - subnet: 172.28.5.0/24
-          # Range for automatic ip assignment (in order not to clash with manually assigned IPs)
-          ip_range: 172.28.5.128/25
+      LAN_HOSTNAME: thermometer
