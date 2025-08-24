@@ -50,7 +50,7 @@ services:
       timeout: 10s
       retries: 5
     pre_stop:
-      - command: sh -c "if [ "${DUMP_DB}" = "true" ]; then mongodump --out /dump; fi"
+      - command: sh -c "if [ "${DUMP_DB:-false}" = "true" ]; then mongodump --out /dump; fi"
 
   # Simulated devices
   roomba:
