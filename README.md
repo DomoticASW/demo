@@ -22,6 +22,16 @@ docker compose up -d
 
 The app will now be available at [localhost](http://localhost)
 
+> **Note:**
+>
+> You can optionally set a `PORT` environment variable to decide on which port to expose the website
+>
+> ```sh
+> PORT=3000 docker compose up -d
+> ```
+>
+> The app will be available at [localhost:3000](http://localhost:3000)
+
 ## How to stop it
 
 ```sh
