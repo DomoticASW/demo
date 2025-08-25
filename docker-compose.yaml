@@ -15,6 +15,11 @@ x-devices-common-environment: &devices-common-environment
 x-device-already-registered-env: &device-already-registered-env
   SERVER_ADDRESS: server:3000
 
+x-presence-sensor-common-env: &presence-sensor-common-env
+  TARGET_CONDITION: Presence
+  CONDITION_PROBABILITY: 33
+  CONDITION_TEST_PERIOD_MS: 5000
+
 name: "domoticasw-demo"
 
 services:
@@ -52,51 +57,94 @@ services:
     pre_stop:
       - command: sh -c "if [ "${DUMP_DB:-false}" = "true" ]; then mongodump --out /dump; fi"
 
-  # Simulated devices
+  # ***** SIMULATED DEVICES *****
+
+  # ***** ROOMBAS *****
   roomba:
     image: ventus218/domoticasw-roomba
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: roomba
 
+  # ***** MUSIC PLAYERS *****
   music-player:
     image: corradostortini2/domoticasw-music-player
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: music-player
       MUSICS: "Back in Black-255,Must Have Been the Wind-243,Eye of the Tiger-246,Don't Stop Me Now-209,INVISIBLE-191"
 
+  # ***** LIGHT SENSORS *****
   light-sensor:
     image: corradostortini2/domoticasw-light-sensor
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: light-sensor
 
+  # ***** PRESENCE SENSORS *****
   presence-sensor:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<:
+        [
+          *devices-common-environment,
+          *presence-sensor-common-env,
+          *device-already-registered-env,
+        ]
       LAN_HOSTNAME: presence-sensor
       ID: presence-sensor
-      TARGET_CONDITION: Presence
-      CONDITION_PROBABILITY: 33
-      CONDITION_TEST_PERIOD_MS: 5000
 
+  presence-sensor-1:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<:
+        [
+          *devices-common-environment,
+          *presence-sensor-common-env,
+          *device-already-registered-env,
+        ]
+      LAN_HOSTNAME: presence-sensor-1
+      ID: presence-sensor-1
+
+  presence-sensor-2:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<:
+        [
+          *devices-common-environment,
+          *presence-sensor-common-env,
+          *device-already-registered-env,
+        ]
+      LAN_HOSTNAME: presence-sensor-2
+      ID: presence-sensor-2
+
+  presence-sensor-3:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *presence-sensor-common-env]
+      LAN_HOSTNAME: presence-sensor-3
+      ID: presence-sensor-3
+
+  # ***** RAIN SENSORS *****
   rain-sensor:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: rain-sensor
       ID: rain-sensor
       TARGET_CONDITION: Rain
       CONDITION_PROBABILITY: 25
       CONDITION_TEST_PERIOD_MS: 5000
 
+  # ***** WASHING MACHINES *****
   washing-machine:
     image: marcoraggio/domoticasw-washing-machine:latest
     <<: *devices-common
@@ -104,23 +152,85 @@ services:
       <<: [*devices-common-environment]
       LAN_HOSTNAME: washing-machine
 
+  # ***** SMART WINDOWS *****
   smart-window:
     image: marcoraggio/domoticasw-window:latest
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
+      ID: sm_000
       LAN_HOSTNAME: smart-window
 
+  smart-window-1:
+    image: marcoraggio/domoticasw-window:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment]
+      ID: sm_001
+      LAN_HOSTNAME: smart-window-1
+
+  # ***** LAMPS *****
   lamp:
     image: fracarluccii/domoticasw-lamp:latest
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: lamp
       LAN_HOSTNAME: lamp
 
+  lamp-1:
+    image: fracarluccii/domoticasw-lamp:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: lamp-1
+      LAN_HOSTNAME: lamp-1
+
+  lamp-2:
+    image: fracarluccii/domoticasw-lamp:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: lamp-2
+      LAN_HOSTNAME: lamp-2
+
+  lamp-3:
+    image: fracarluccii/domoticasw-lamp:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment]
+      ID: lamp-3
+      LAN_HOSTNAME: lamp-3
+
+  # ***** THERMOMETERS *****
   thermometer:
     image: fracarluccii/domoticasw-thermometer:latest
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: thermometer
       LAN_HOSTNAME: thermometer
+
+  thermometer-1:
+    image: fracarluccii/domoticasw-thermometer:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: thermometer-1
+      LAN_HOSTNAME: thermometer-1
+
+  thermometer-2:
+    image: fracarluccii/domoticasw-thermometer:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *device-already-registered-env]
+      ID: thermometer-2
+      LAN_HOSTNAME: thermometer-2
+
+  thermometer-3:
+    image: fracarluccii/domoticasw-thermometer:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment]
+      ID: thermometer-3
+      LAN_HOSTNAME: thermometer-3
