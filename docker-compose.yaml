@@ -54,8 +54,10 @@ services:
       interval: 3s
       timeout: 10s
       retries: 5
+    environment:
+      - DUMP_DB=${DUMP_DB:-false}
     pre_stop:
-      - command: sh -c "if [ "${DUMP_DB:-false}" = "true" ]; then mongodump --out /dump; fi"
+      - command: sh -c "if [ "$${DUMP_DB}" = "true" ]; then mongodump --out /dump; fi"
 
   # ***** SIMULATED DEVICES *****
 
