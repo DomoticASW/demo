@@ -130,9 +130,22 @@ services:
     image: ventus218/domoticasw-boolean-sensor
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment, *presence-sensor-common-env]
+      <<:
+        [
+          *devices-common-environment,
+          *presence-sensor-common-env,
+          *device-already-registered-env,
+        ]
       LAN_HOSTNAME: presence-sensor-3
       ID: presence-sensor-3
+
+  presence-sensor-4:
+    image: ventus218/domoticasw-boolean-sensor
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment, *presence-sensor-common-env]
+      LAN_HOSTNAME: presence-sensor-4
+      ID: presence-sensor-4
 
   # ***** RAIN SENSORS *****
   rain-sensor:
@@ -200,9 +213,17 @@ services:
     image: fracarluccii/domoticasw-lamp:latest
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       ID: lamp-3
       LAN_HOSTNAME: lamp-3
+
+  lamp-4:
+    image: fracarluccii/domoticasw-lamp:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment]
+      ID: lamp-4
+      LAN_HOSTNAME: lamp-4
 
   # ***** THERMOMETERS *****
   thermometer:
@@ -233,6 +254,14 @@ services:
     image: fracarluccii/domoticasw-thermometer:latest
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       ID: thermometer-3
       LAN_HOSTNAME: thermometer-3
+
+  thermometer-4:
+    image: fracarluccii/domoticasw-thermometer:latest
+    <<: *devices-common
+    environment:
+      <<: [*devices-common-environment]
+      ID: thermometer-4
+      LAN_HOSTNAME: thermometer-4

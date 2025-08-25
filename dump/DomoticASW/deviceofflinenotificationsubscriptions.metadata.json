@@ -1,1 +1,1 @@
-{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"146ee28b086a4b568e1e05d92ee0ccee","collectionName":"deviceofflinenotificationsubscriptions","type":"collection"}
+{"indexes":[{"v":{"$numberInt":"2"},"key":{"_id":{"$numberInt":"1"}},"name":"_id_"}],"uuid":"5f88fc3b07124ea8a7b8efa9a3131cfd","collectionName":"deviceofflinenotificationsubscriptions","type":"collection"}
