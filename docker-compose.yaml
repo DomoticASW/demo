@@ -2,7 +2,6 @@ x-devices-common: &devices-common
   depends_on:
     server:
       condition: service_healthy
-  pull_policy: daily
 
 x-devices-common-environment: &devices-common-environment
   SERVER_DISCOVERY_PORT: 30000 # Port on which the device will announce in broadcast
@@ -24,8 +23,7 @@ name: "domoticasw-demo"
 
 services:
   server:
-    image: ventus218/domoticasw-server
-    pull_policy: daily
+    image: ventus218/domoticasw-server@sha256:1c468bfe0f285c394a748df2eb108af969c628b53cb8c331f1d4adae53a16be9
     depends_on:
       mongo:
         condition: service_healthy
@@ -44,7 +42,7 @@ services:
       JWT_SECRET: secret
 
   mongo:
-    image: mongo
+    image: mongo@sha256:bf41aa48a1cc0ccc8e6071236acfc428b7110ec2cf14b47c8961bc472e2c7c61
     volumes:
       - ./dump:/data/dump
       - ./dump:/dump
@@ -59,11 +57,19 @@ services:
     pre_stop:
       - command: sh -c "if [ "$${DUMP_DB}" = "true" ]; then mongodump --out /dump; fi"
 
+  mongo-express:
+    image: mongo-express@sha256:1b23d7976f0210dbec74045c209e52fbb26d29b2e873d6c6fa3d3f0ae32c2a64
+    restart: always
+    ports:
+      - 8081:8081
+    environment:
+      ME_CONFIG_MONGODB_URL: mongodb://mongo:27017/
+      ME_CONFIG_BASICAUTH: false
   # ***** SIMULATED DEVICES *****
 
   # ***** ROOMBAS *****
   roomba:
-    image: ventus218/domoticasw-roomba
+    image: ventus218/domoticasw-roomba@sha256:ecac694a75a42a860a38c6a7f0767dfbbc42ca377fa6acc6ecbe089f2e739183
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -71,7 +77,7 @@ services:
 
   # ***** MUSIC PLAYERS *****
   music-player:
-    image: corradostortini2/domoticasw-music-player
+    image: corradostortini2/domoticasw-music-player@sha256:8cbd01470746ead3901a42ca819fc23f8380ca136d150fc74aa2b410fd9438a9
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -80,7 +86,7 @@ services:
 
   # ***** LIGHT SENSORS *****
   light-sensor:
-    image: corradostortini2/domoticasw-light-sensor
+    image: corradostortini2/domoticasw-light-sensor@sha256:940383813d6c186ed32b894966568e6fe3ef94d808845f9f568ec8492f511592
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -88,7 +94,7 @@ services:
 
   # ***** PRESENCE SENSORS *****
   presence-sensor:
-    image: ventus218/domoticasw-boolean-sensor
+    image: &boolean-sensor-image ventus218/domoticasw-boolean-sensor@sha256:691f284a6cd9fade3d487b6e2473e19baef5f7b0d4ea3007f825b7d79ed19e48
     <<: *devices-common
     environment:
       <<:
@@ -101,7 +107,7 @@ services:
       ID: presence-sensor
 
   presence-sensor-1:
-    image: ventus218/domoticasw-boolean-sensor
+    image: *boolean-sensor-image
     <<: *devices-common
     environment:
       <<:
@@ -114,7 +120,7 @@ services:
       ID: presence-sensor-1
 
   presence-sensor-2:
-    image: ventus218/domoticasw-boolean-sensor
+    image: *boolean-sensor-image
     <<: *devices-common
     environment:
       <<:
@@ -127,7 +133,7 @@ services:
       ID: presence-sensor-2
 
   presence-sensor-3:
-    image: ventus218/domoticasw-boolean-sensor
+    image: *boolean-sensor-image
     <<: *devices-common
     environment:
       <<:
@@ -140,7 +146,7 @@ services:
       ID: presence-sensor-3
 
   presence-sensor-4:
-    image: ventus218/domoticasw-boolean-sensor
+    image: *boolean-sensor-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *presence-sensor-common-env]
@@ -149,7 +155,7 @@ services:
 
   # ***** RAIN SENSORS *****
   rain-sensor:
-    image: ventus218/domoticasw-boolean-sensor
+    image: *boolean-sensor-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -161,7 +167,7 @@ services:
 
   # ***** WASHING MACHINES *****
   washing-machine:
-    image: marcoraggio/domoticasw-washing-machine:latest
+    image: marcoraggio/domoticasw-washing-machine@sha256:e99f4d38a4a3a845ea443f2779a32e34c7ae5c78f6ed39a980a0698c0e8bf299
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
@@ -169,7 +175,7 @@ services:
 
   # ***** SMART WINDOWS *****
   smart-window:
-    image: marcoraggio/domoticasw-window:latest
+    image: &smart-window-image marcoraggio/domoticasw-window@sha256:0641cdfe1cba29a16cf64bb8c0582f84fb4555df3067e2ff63588e00bf2774e7
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
@@ -177,7 +183,7 @@ services:
       LAN_HOSTNAME: smart-window
 
   smart-window-1:
-    image: marcoraggio/domoticasw-window:latest
+    image: *smart-window-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
@@ -186,7 +192,7 @@ services:
 
   # ***** LAMPS *****
   lamp:
-    image: fracarluccii/domoticasw-lamp:latest
+    image: &lamp-image fracarluccii/domoticasw-lamp@sha256:b52f41da38732ef2c9e9582ab71dfd1648192be8d4c8a62c664b9d4cf7adb8e4
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -194,7 +200,7 @@ services:
       LAN_HOSTNAME: lamp
 
   lamp-1:
-    image: fracarluccii/domoticasw-lamp:latest
+    image: *lamp-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -202,7 +208,7 @@ services:
       LAN_HOSTNAME: lamp-1
 
   lamp-2:
-    image: fracarluccii/domoticasw-lamp:latest
+    image: *lamp-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -210,7 +216,7 @@ services:
       LAN_HOSTNAME: lamp-2
 
   lamp-3:
-    image: fracarluccii/domoticasw-lamp:latest
+    image: *lamp-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -218,7 +224,7 @@ services:
       LAN_HOSTNAME: lamp-3
 
   lamp-4:
-    image: fracarluccii/domoticasw-lamp:latest
+    image: *lamp-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
@@ -227,7 +233,7 @@ services:
 
   # ***** THERMOMETERS *****
   thermometer:
-    image: fracarluccii/domoticasw-thermometer:latest
+    image: &thermometer-image fracarluccii/domoticasw-thermometer@sha256:271b83722a4e1818c1494a5fecdbe1138731a771282a1f2a2cd7c7a1f7e8d70d
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -235,7 +241,7 @@ services:
       LAN_HOSTNAME: thermometer
 
   thermometer-1:
-    image: fracarluccii/domoticasw-thermometer:latest
+    image: *thermometer-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -243,7 +249,7 @@ services:
       LAN_HOSTNAME: thermometer-1
 
   thermometer-2:
-    image: fracarluccii/domoticasw-thermometer:latest
+    image: *thermometer-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -251,7 +257,7 @@ services:
       LAN_HOSTNAME: thermometer-2
 
   thermometer-3:
-    image: fracarluccii/domoticasw-thermometer:latest
+    image: *thermometer-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -259,7 +265,7 @@ services:
       LAN_HOSTNAME: thermometer-3
 
   thermometer-4:
-    image: fracarluccii/domoticasw-thermometer:latest
+    image: *thermometer-image
     <<: *devices-common
     environment:
       <<: [*devices-common-environment]
