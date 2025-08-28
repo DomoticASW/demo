@@ -29,9 +29,9 @@ services:
         condition: service_healthy
     healthcheck:
       test: wget --quiet --spider http://localhost:3000 || exit 1
-      interval: 3s
-      timeout: 10s
-      retries: 5
+      interval: 1s
+      timeout: &timeout 10s
+      start_period: *timeout
     ports:
       - ${PORT:-80}:3000
     environment:
@@ -49,9 +49,9 @@ services:
       - ./mongo-init-scripts:/docker-entrypoint-initdb.d
     healthcheck:
       test: mongosh --quiet --eval "db.runCommand('ping').ok" || exit 1
-      interval: 3s
-      timeout: 10s
-      retries: 5
+      interval: 1s
+      timeout: &timeout 15s
+      start_period: *timeout
     environment:
       - DUMP_DB=${DUMP_DB:-false}
     pre_stop:
