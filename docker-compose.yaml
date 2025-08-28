@@ -167,18 +167,18 @@ services:
 
   # ***** WASHING MACHINES *****
   washing-machine:
-    image: marcoraggio/domoticasw-washing-machine@sha256:e99f4d38a4a3a845ea443f2779a32e34c7ae5c78f6ed39a980a0698c0e8bf299
+    image: marcoraggio/domoticasw-washing-machine@sha256:239f793c19708255e66f67250a8c9ed27fb533262a86e451391277762be02fcb
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: washing-machine
 
   # ***** SMART WINDOWS *****
   smart-window:
-    image: &smart-window-image marcoraggio/domoticasw-window@sha256:0641cdfe1cba29a16cf64bb8c0582f84fb4555df3067e2ff63588e00bf2774e7
+    image: &smart-window-image marcoraggio/domoticasw-window@sha256:7d650ab8186f434280c1d364576f57bf5686d8c16122752473ec5eed8b330f1d
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       ID: sm_000
       LAN_HOSTNAME: smart-window
 
@@ -186,7 +186,7 @@ services:
     image: *smart-window-image
     <<: *devices-common
     environment:
-      <<: [*devices-common-environment]
+      <<: [*devices-common-environment, *device-already-registered-env]
       ID: sm_001
       LAN_HOSTNAME: smart-window-1
 
