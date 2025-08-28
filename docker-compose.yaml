@@ -73,6 +73,10 @@ services:
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
+      ROOMS: Kitchen, Parents room, Living room, Children room
+      INIT_ROOM: Living room
+      CHARGING_ROOM: Living room
+      STATE: Charging
       LAN_HOSTNAME: roomba
 
   # ***** MUSIC PLAYERS *****
