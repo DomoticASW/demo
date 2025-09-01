@@ -12,7 +12,10 @@ The demo includes:
   - Access control rules for users
 - Simulated devices
 
-Note that some devices are already registered to the system while others can be registered by you through automatic discovery.
+> **Note that:**
+>
+> - some devices are already registered to the system while others can be registered by you through automatic discovery.
+> - a base delay and a random delay have been artifically added in order to show that our system can handle that.
 
 ## How to run it
 
