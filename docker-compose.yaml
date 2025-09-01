@@ -99,6 +99,7 @@ services:
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
       LAN_HOSTNAME: light-sensor
+      UPDATE_RATE: 12000
 
   # ***** PRESENCE SENSORS *****
   presence-sensor:
