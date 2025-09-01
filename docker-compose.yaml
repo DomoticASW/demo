@@ -23,7 +23,7 @@ name: "domoticasw-demo"
 
 services:
   server:
-    image: ventus218/domoticasw-server@sha256:ac2a9d62d41885d98613830549b8a84b978958f9f2899b43abe91c92ec12997c
+    image: ventus218/domoticasw-server@sha256:f90d14df8db47413deb1ca0e2c1ce0b78ed097c8d701cea2a9311932c46277a3
     depends_on:
       mongo:
         condition: service_healthy
