@@ -176,7 +176,7 @@ services:
 
   # ***** SMART WINDOWS *****
   smart-window:
-    image: &smart-window-image marcoraggio/domoticasw-window@sha256:7d650ab8186f434280c1d364576f57bf5686d8c16122752473ec5eed8b330f1d
+    image: &smart-window-image marcoraggio/domoticasw-window@sha256:9e6cbd82973ab3115a3bdfbb43be56a16e3855ff5bfc45972255a2338060bbf5
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
