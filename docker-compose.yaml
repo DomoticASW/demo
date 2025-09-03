@@ -77,7 +77,7 @@ services:
 
   # ***** MUSIC PLAYERS *****
   music-player:
-    image: corradostortini2/domoticasw-music-player@sha256:8cbd01470746ead3901a42ca819fc23f8380ca136d150fc74aa2b410fd9438a9
+    image: corradostortini2/domoticasw-music-player@sha256:e603aa4692663f0c0aa7d35277074df4864aca2d7a476427cd16f774fa048dfa
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
