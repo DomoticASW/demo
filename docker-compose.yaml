@@ -95,7 +95,7 @@ services:
 
   # ***** PRESENCE SENSORS *****
   presence-sensor:
-    image: &boolean-sensor-image ventus218/domoticasw-boolean-sensor@sha256:691f284a6cd9fade3d487b6e2473e19baef5f7b0d4ea3007f825b7d79ed19e48
+    image: &boolean-sensor-image ventus218/domoticasw-boolean-sensor@sha256:70a19a1f4f5bcf109b4d1652e6a7974b0213b00d969779260344c5d5aef8ef1e
     <<: *devices-common
     environment:
       <<:
