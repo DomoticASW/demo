@@ -193,7 +193,7 @@ services:
 
   # ***** LAMPS *****
   lamp:
-    image: &lamp-image fracarluccii/domoticasw-lamp@sha256:b52f41da38732ef2c9e9582ab71dfd1648192be8d4c8a62c664b9d4cf7adb8e4
+    image: &lamp-image fracarluccii/domoticasw-lamp@sha256:4f046fc6552ff6c1bc79985daf24bd69cc9c6aac3d245f01317451c5c05572f1
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
