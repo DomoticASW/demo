@@ -234,7 +234,7 @@ services:
 
   # ***** THERMOMETERS *****
   thermometer:
-    image: &thermometer-image fracarluccii/domoticasw-thermometer@sha256:271b83722a4e1818c1494a5fecdbe1138731a771282a1f2a2cd7c7a1f7e8d70d
+    image: &thermometer-image fracarluccii/domoticasw-thermometer@sha256:0bb640aefe4f17b0efe6821471d255ce5e2fd7d061d3f96829e25cd66e1db080
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
