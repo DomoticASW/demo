@@ -65,7 +65,7 @@ services:
 
   # ***** ROOMBAS *****
   roomba:
-    image: ventus218/domoticasw-roomba@sha256:0966bdae11c6111663bd884480a6c52ae360969f11e74c6028c681733beaf2d5
+    image: ventus218/domoticasw-roomba@sha256:087e4810f981c90cde4fa8678ab8eccf42ae31f36b103385913d451343ce8048
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -95,7 +95,7 @@ services:
 
   # ***** PRESENCE SENSORS *****
   presence-sensor:
-    image: &boolean-sensor-image ventus218/domoticasw-boolean-sensor@sha256:691f284a6cd9fade3d487b6e2473e19baef5f7b0d4ea3007f825b7d79ed19e48
+    image: &boolean-sensor-image ventus218/domoticasw-boolean-sensor@sha256:70a19a1f4f5bcf109b4d1652e6a7974b0213b00d969779260344c5d5aef8ef1e
     <<: *devices-common
     environment:
       <<:
@@ -168,7 +168,7 @@ services:
 
   # ***** WASHING MACHINES *****
   washing-machine:
-    image: marcoraggio/domoticasw-washing-machine@sha256:239f793c19708255e66f67250a8c9ed27fb533262a86e451391277762be02fcb
+    image: marcoraggio/domoticasw-washing-machine@sha256:0f5b111e190b20eed62e9be7ec6db7306f146960da40257a6dbee18339e7f014
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -176,7 +176,7 @@ services:
 
   # ***** SMART WINDOWS *****
   smart-window:
-    image: &smart-window-image marcoraggio/domoticasw-window@sha256:7d650ab8186f434280c1d364576f57bf5686d8c16122752473ec5eed8b330f1d
+    image: &smart-window-image marcoraggio/domoticasw-window@sha256:9e6cbd82973ab3115a3bdfbb43be56a16e3855ff5bfc45972255a2338060bbf5
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -193,7 +193,7 @@ services:
 
   # ***** LAMPS *****
   lamp:
-    image: &lamp-image fracarluccii/domoticasw-lamp@sha256:b52f41da38732ef2c9e9582ab71dfd1648192be8d4c8a62c664b9d4cf7adb8e4
+    image: &lamp-image fracarluccii/domoticasw-lamp@sha256:4f046fc6552ff6c1bc79985daf24bd69cc9c6aac3d245f01317451c5c05572f1
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
@@ -234,7 +234,7 @@ services:
 
   # ***** THERMOMETERS *****
   thermometer:
-    image: &thermometer-image fracarluccii/domoticasw-thermometer@sha256:271b83722a4e1818c1494a5fecdbe1138731a771282a1f2a2cd7c7a1f7e8d70d
+    image: &thermometer-image fracarluccii/domoticasw-thermometer@sha256:0bb640aefe4f17b0efe6821471d255ce5e2fd7d061d3f96829e25cd66e1db080
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]

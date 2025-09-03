@@ -73,6 +73,13 @@ docker compose up
 | ------------ | ---------------------- | -------- |
 | Evelyn Moore | evelyn.moore@email.com | password |
 
+### Permissions
+
+If you login as Liam or Emma you will notice that they are not able to execute action on some devices and execute or edit most of the tasks/automations.
+
+The reason is that the admin (Alex) knows his children really well and has carefully crafted rules
+in order to avoid his children messing up the house.
+
 ## How to modify and persist sample data
 
 You should run:
