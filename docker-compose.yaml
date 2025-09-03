@@ -86,7 +86,7 @@ services:
 
   # ***** LIGHT SENSORS *****
   light-sensor:
-    image: corradostortini2/domoticasw-light-sensor@sha256:940383813d6c186ed32b894966568e6fe3ef94d808845f9f568ec8492f511592
+    image: corradostortini2/domoticasw-light-sensor@sha256:2d880c80677360341c9954f07e512f891a6b250d657f1ab0a8dc9da6689b667c
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
