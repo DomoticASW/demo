@@ -168,7 +168,7 @@ services:
 
   # ***** WASHING MACHINES *****
   washing-machine:
-    image: marcoraggio/domoticasw-washing-machine@sha256:239f793c19708255e66f67250a8c9ed27fb533262a86e451391277762be02fcb
+    image: marcoraggio/domoticasw-washing-machine@sha256:0f5b111e190b20eed62e9be7ec6db7306f146960da40257a6dbee18339e7f014
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
