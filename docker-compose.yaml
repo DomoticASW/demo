@@ -65,7 +65,7 @@ services:
 
   # ***** ROOMBAS *****
   roomba:
-    image: ventus218/domoticasw-roomba@sha256:0966bdae11c6111663bd884480a6c52ae360969f11e74c6028c681733beaf2d5
+    image: ventus218/domoticasw-roomba@sha256:087e4810f981c90cde4fa8678ab8eccf42ae31f36b103385913d451343ce8048
     <<: *devices-common
     environment:
       <<: [*devices-common-environment, *device-already-registered-env]
