@@ -23,7 +23,7 @@ name: "domoticasw-demo"
 
 services:
   server:
-    image: ventus218/domoticasw-server@sha256:f90d14df8db47413deb1ca0e2c1ce0b78ed097c8d701cea2a9311932c46277a3
+    image: ventus218/domoticasw-server@sha256:494b00b16db78feecf7b1221d2c2cc0be511e5a01a3485273ff27a4cc7576736
     depends_on:
       mongo:
         condition: service_healthy
@@ -39,6 +39,7 @@ services:
       MONGO_HOST: mongo
       MONGO_PORT: 27017
       SERVER_PORT: 3000
+      SERVER_HOST: server
       DISCOVERY_PORT: 30000
       JWT_SECRET: secret
       BASE_DELAY_MS: 100
